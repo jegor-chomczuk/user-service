@@ -1,5 +1,6 @@
 package com.gymproject.userservice.dto;
 
+import com.gymproject.userservice.dao.User;
 import com.gymproject.userservice.enums.Status;
 import com.gymproject.userservice.enums.UserType;
 import lombok.AllArgsConstructor;
@@ -7,8 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -16,15 +16,24 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class UserDTO {
 
-    @NotBlank
+    private Long id;
+
     private String name;
 
-    @NotBlank
     private String email;
 
-    @NotNull
     private UserType userType;
 
-    @NotNull
     private Status status;
+
+    private LocalDate joinedTheGymSince;
+
+    public UserDTO(User user) {
+        user.setId(user.getId());
+        user.setName(user.getName());
+        user.setEmail(user.getEmail());
+        user.setUserType(user.getUserType());
+        user.setStatus(user.getStatus());
+        user.setJoinedTheGymSince(user.getJoinedTheGymSince());
+    }
 }

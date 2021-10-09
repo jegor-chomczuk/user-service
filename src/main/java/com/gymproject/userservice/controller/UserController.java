@@ -1,7 +1,8 @@
 package com.gymproject.userservice.controller;
 
-import com.gymproject.userservice.dao.User;
+import com.gymproject.userservice.dto.UserCreatorDTO;
 import com.gymproject.userservice.dto.UserDTO;
+import com.gymproject.userservice.enums.UserType;
 import com.gymproject.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,37 +17,47 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/api/members")
-    public List<User> getAllMembers() {
+    public List<UserDTO> getAllMembers() {
         return userService.getAllMembers();
     }
 
     @GetMapping("/api/members/{id}")
-    public User getMemberById(@PathVariable(name = "id") Long id) {
+    public UserDTO getMemberById(@PathVariable(name = "id") Long id) {
         return userService.getMemberById(id);
     }
 
     @GetMapping("/api/coaches")
-    public List<User> getAllCoaches() {
+    public List<UserDTO> getAllCoaches() {
         return userService.getAllCoaches();
     }
 
+    @GetMapping("/api/coaches/{id}")
+    public UserDTO getCoachById(@PathVariable(name = "id") Long id) {
+        return userService.getMemberByIdAndUserType(id, UserType.COACH);
+    }
+
+    @GetMapping("/api/coaches/active")
+    public List<UserDTO> getAllActiveCoaches() {
+        return userService.getAllActiveCoaches();
+    }
+
     @GetMapping("/api/customers")
-    public List<User> getAllCustomers() {
+    public List<UserDTO> getAllCustomers() {
         return userService.getAllCustomers();
     }
 
-    @GetMapping("/api/coaches/{id}")
-    public User getCoachById(@PathVariable(name = "id") Long id) {
-        return userService.getCoachById(id);
+    @GetMapping("/api/customers/{id}")
+    public UserDTO getCustomerById(@PathVariable(name = "id") Long id) {
+        return userService.getMemberByIdAndUserType(id, UserType.CUSTOMER);
     }
 
     @PostMapping("/api/members/add")
-    public User addMember (@RequestBody @Valid UserDTO userDTO){
-        return userService.addMember(userDTO);
+    public UserDTO addMember(@RequestBody @Valid UserCreatorDTO userCreatorDTO) {
+        return userService.addMember(userCreatorDTO);
     }
 
     @PatchMapping("/api/members/update/{id}")
-    public User updateUser(@PathVariable(name = "id") Long id, @RequestBody UserDTO userDTO){
-        return userService.updateUser(id, userDTO);
+    public UserDTO updateUser(@PathVariable(name = "id") Long id, @RequestBody UserCreatorDTO userCreatorDTO) {
+        return userService.updateUser(id, userCreatorDTO);
     }
 }
