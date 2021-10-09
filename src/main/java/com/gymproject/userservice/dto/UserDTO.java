@@ -29,11 +29,11 @@ public class UserDTO {
     private LocalDate joinedTheGymSince;
 
     public UserDTO(User user) {
-        user.setId(user.getId());
-        user.setName(user.getName());
-        user.setEmail(user.getEmail());
-        user.setUserType(user.getUserType());
-        user.setStatus(user.getStatus());
-        user.setJoinedTheGymSince(user.getJoinedTheGymSince());
+        setId(user.getId());
+        setName(user.getName());
+        setEmail(user.getEmail());
+        setUserType(user.getUserType());
+        setStatus(user.getStatus());
+        setJoinedTheGymSince(user.getJoinedTheGymSince());
     }
 }
